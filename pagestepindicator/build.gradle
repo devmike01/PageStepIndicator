@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+
+apply from: rootProject.file('dependecy.gradle')
+
+group='com.github.devmike01'
+
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildToolsVersion '28.0.3'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation dependency.appCompat
+    implementation dependency.junit
+    //implementation dependency.robolectric
+    implementation dependency.mockito
+    implementation dependency.supportDesign
+    implementation dependency.supportAnnotation
+
+    /*Properties props = new Properties()
+    //InputStream inputStream = this.getClass().getResourceAsStream("local.properties")
+    props.load(project.rootProject.file('local.properties').newDataInputStream())
+    boolean useAndroidx = props.getProperty("android.useAndroidX")
+    boolean enableJetifier = props.getProperty("android.enableJetifier")
+    if (useAndroidx != null && enableJetifier != null && useAndroidx && enableJetifier) {
+
+    } else {
+    }*/
+}
+
+//sourceCompatibility = "8"
+//targetCompatibility = "8"

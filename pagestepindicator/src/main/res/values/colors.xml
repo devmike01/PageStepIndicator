@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/golden</color>
+    <color name="colorPrimaryDark">#da9601</color>
+    <color name="colorAccent">#7702ca</color>
+
+    <color name="colorLightAccent">#ab38fd</color>
+    <color name="yellow">#deb604</color>
+    <color name="golden">#f7aa02</color>
+    <color name="defaultColor">#c98900</color>
+
+    <color name="background_default">#A5D6A7</color>
+    <color name="step_default">#4CAF50</color>
+    <color name="current_step_default">#ffffff</color>
+    <color name="text_default">#000000</color>
+    <color name="secondary_text_default">#ffffff</color>
+    <color name="status_bar">#838282</color>
+    <color name="lighter_gray">#ddd</color>
+    <color name="page_title_color">#797979</color>
+
+    <color name="ed_border">#d4606060</color>
+
+    <color name="topbar_button_color">#494949</color>
+</resources>

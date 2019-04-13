@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PageStepIndicator">
+        <attr name="pgStepCount" format="integer" />
+        <attr name="pgRadius" format="dimension" />
+        <attr name="pgStrokeWidth" format="dimension" />
+        <attr name="pgStepColor" format="color" />
+        <attr name="pgCurrentStepColor" format="color" />
+        <attr name="pgBackgroundColor" format="color" />
+        <attr name="pgTextColor" format="color" />
+        <attr name="pgSecondaryTextColor" format="color" />
+        <attr name="pgLineHeight" format="dimension" />
+
+        <attr name="pgStrokeAlpha" format="integer"/>
+        <attr name="pgTitles" format="reference"/>
+        <attr name="pgClickableTitle" format="boolean"/>
+        <attr name="pgActiveTitleColor" format="color"/>
+        <attr name="pgInActiveTitleColor" format="color"/>
+        <attr name="pgTitleTextSize" format="dimension"/>
+    </declare-styleable>
+</resources>
