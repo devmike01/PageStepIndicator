@@ -1,5 +1,6 @@
 package devmike.jade.com;
 
+import android.animation.*;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -122,6 +124,8 @@ public class PageStepIndicator extends View {
         pStoke = new Paint();
         pText = new Paint();
         tText = new Paint();
+
+
         defaultTitleSize = radius *1.2f;
 
         paint.setColor(stepColor);
@@ -133,6 +137,7 @@ public class PageStepIndicator extends View {
         pStoke.setStrokeWidth(strokeWidth);
         pStoke.setStyle(Paint.Style.STROKE);
         pStoke.setFlags(Paint.ANTI_ALIAS_FLAG);
+
 
         tText.setTextSize(titleTextSize);
         tText.setColor(pageInActiveTitleColor);
@@ -149,6 +154,7 @@ public class PageStepIndicator extends View {
         Color.colorToHSV(currentColor, hsvCurrent);
         Color.colorToHSV(backgroundColor, hsvBG);
         Color.colorToHSV(stepColor, hsvProgress);
+        animateView(paint, currentColor, currentColor);
         invalidate();
     }
 
@@ -353,7 +359,9 @@ public class PageStepIndicator extends View {
                 }
 
                 pText.setColor(secondaryTextColor);
+
                 tText.setColor(pageInActiveTitleColor);
+                animateView(tText, pageActiveTitleColor, pageInActiveTitleColor);
 
             } else if (i == currentStepPosition) {
                 //draw current step
@@ -375,13 +383,18 @@ public class PageStepIndicator extends View {
                 canvas.drawCircle(pointX, centerY, radius, paint);
                 canvas.drawCircle(pointX, centerY, radius, pStoke);
                 pText.setColor(textColor);
+
                 tText.setColor(pageActiveTitleColor);
+                animateView(tText, pageInActiveTitleColor, pageActiveTitleColor);
+
             } else {
                 //draw next step
                 paint.setColor(backgroundColor);
                 canvas.drawCircle(pointX, centerY, radius, paint);
                 pText.setColor(secondaryTextColor);
+
                 tText.setColor(pageInActiveTitleColor);
+                animateView(tText, pageActiveTitleColor, pageInActiveTitleColor);
 
                 //draw transition
                 if (i == currentStepPosition + 1 && offsetPixel > 0 && pagerScrollState == 1) {
@@ -403,6 +416,11 @@ public class PageStepIndicator extends View {
 
             pointX = pointX + stepDistance;
         }
+
+    }
+
+    private void animateView(Paint target, @ColorInt int defaultColor, @ColorInt int toColor){
+        //TODO: Do animation works here
 
     }
 
