@@ -10,6 +10,9 @@
 
     <devmike.jade.com.PageStepIndicator
             app:pgTitles="@array/titles"
+            app:pgStrokeAlpha="255"
+            app:pgActiveTitleColor="@android:color/white"
+            app:pgInActiveTitleColor="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

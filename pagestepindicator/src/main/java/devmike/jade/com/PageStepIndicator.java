@@ -9,6 +9,7 @@ import android.graphics.*;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,8 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import com.devmike.pagestepindicator.R;
+
+import java.util.ArrayList;
 
 
 public class PageStepIndicator extends View {
@@ -34,6 +37,9 @@ public class PageStepIndicator extends View {
     private static final int DEFAULT_SECONDARY_TEXT_COLOR = R.color.secondary_text_default;
     public static final float DEFAULT_LINE_HEIGHT =6.0f;
     public static final int DEFAULT_STROKE_ALPHA = 100;
+    private static final int DEFAULT_TITLE_SIZE =14;
+
+    private String[] titles;
 
     private int radius;
     private int pageStrokeAlpha;
@@ -42,6 +48,7 @@ public class PageStepIndicator extends View {
     private int pageActiveTitleColor;
     private int pageInActiveTitleColor;
     private float titleTextSize;
+    private float defaultTitleSize;
     private float mLineHeight;
     private int strokeWidth;
     private int currentStepPosition;
@@ -115,7 +122,7 @@ public class PageStepIndicator extends View {
         pStoke = new Paint();
         pText = new Paint();
         tText = new Paint();
-        titleTextSize = radius *1.2f;
+        defaultTitleSize = radius *1.2f;
 
         paint.setColor(stepColor);
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
@@ -152,6 +159,8 @@ public class PageStepIndicator extends View {
         }
 
         try {
+            titleTextSize = (int) attr.getDimension(R.styleable.PageStepIndicator_pgTitleTextSize, dp2px(DEFAULT_TITLE_SIZE));
+            //pgStrokeAlpha = attr.getInteger(R.styleable.PageStepIndicator_pgStrokeAlpha, DEFAULT_STROKE_ALPHA);
             radius = (int) attr.getDimension(R.styleable.PageStepIndicator_pgRadius, dp2px(DEFAULT_STEP_RADIUS));
             strokeWidth = (int) attr.getDimension(R.styleable.PageStepIndicator_pgStrokeWidth, dp2px(DEFAULT_STOKE_WIDTH));
             stepsCount = attr.getInt(R.styleable.PageStepIndicator_pgStepCount, DEFAULT_STEP_COUNT);
@@ -161,8 +170,8 @@ public class PageStepIndicator extends View {
             backgroundColor = attr.getColor(R.styleable.PageStepIndicator_pgBackgroundColor, ContextCompat.getColor(context, DEFAULT_BACKGROUND_COLOR));
             textColor = attr.getColor(R.styleable.PageStepIndicator_pgTextColor, ContextCompat.getColor(context, DEFAULT_TEXT_COLOR));
             secondaryTextColor = attr.getColor(R.styleable.PageStepIndicator_pgSecondaryTextColor, ContextCompat.getColor(context, DEFAULT_SECONDARY_TEXT_COLOR));
-            pageInActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgActiveTitleColor, secondaryTextColor);
-            pageActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgActiveTitleColor, currentColor);
+            pageInActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgInActiveTitleColor, ContextCompat.getColor(context, DEFAULT_SECONDARY_TEXT_COLOR));
+            pageActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgActiveTitleColor,  ContextCompat.getColor(context, DEFAULT_CURRENT_STEP_COLOR));
             pageTitleId = attr.getResourceId(R.styleable.PageStepIndicator_pgTitles, View.NO_ID);
             pageStrokeAlpha = attr.getInt(R.styleable.PageStepIndicator_pgStrokeAlpha, DEFAULT_STROKE_ALPHA);
 
@@ -280,8 +289,13 @@ public class PageStepIndicator extends View {
     }
 
 
-    public void setTitles(String[] titles){
+    public void setTitles(@ArrayRes int id){
+        //Set page titles through java
+        this.pageTitleId = id;
+    }
 
+    public void setTitles(String[] titles){
+        this.titles = titles;
     }
 
     @Override
@@ -367,7 +381,7 @@ public class PageStepIndicator extends View {
                 paint.setColor(backgroundColor);
                 canvas.drawCircle(pointX, centerY, radius, paint);
                 pText.setColor(secondaryTextColor);
-                tText.setColor(pageActiveTitleColor);
+                tText.setColor(pageInActiveTitleColor);
 
                 //draw transition
                 if (i == currentStepPosition + 1 && offsetPixel > 0 && pagerScrollState == 1) {
@@ -378,7 +392,8 @@ public class PageStepIndicator extends View {
             }
             //Draw title text
             if(pageTitleId != View.NO_ID) {
-                String[] titles = getContext().getResources().getStringArray(pageTitleId);
+
+                titles = getContext().getResources().getStringArray(pageTitleId);
 
                 //Draw titles
                 drawTextBottom(canvas, tText, titles[i], pointX, (getHeight()-(titleTextSize)));
@@ -540,6 +555,10 @@ public class PageStepIndicator extends View {
         ss.currentColor = this.currentColor;
         ss.textColor = this.textColor;
         ss.secondaryTextColor = this.secondaryTextColor;
+        ss.titleTextSize = this.titleSize;
+        ss.pageActiveTitleColor = this.pageActiveTitleColor;
+        ss.pageInActiveTitleColor = this.pageInActiveTitleColor;
+        ss.pageTitleId = this.pageTitleId;
         return ss;
     }
 
@@ -562,6 +581,10 @@ public class PageStepIndicator extends View {
         this.currentColor = ss.currentColor;
         this.textColor = ss.textColor;
         this.secondaryTextColor = ss.secondaryTextColor;
+        this.titleTextSize =ss.titleTextSize;
+        this.pageActiveTitleColor = ss.pageActiveTitleColor;
+        this.pageInActiveTitleColor = ss.pageInActiveTitleColor;
+        this.pageTitleId = ss.pageTitleId;
     }
 
     static class SavedState extends BaseSavedState {
@@ -575,6 +598,13 @@ public class PageStepIndicator extends View {
         int currentColor;
         int textColor;
         int secondaryTextColor;
+        int titleTextSize;
+        int pageStrokeAlpha;
+        int pageTitleId;
+
+        private boolean isTitleClickable;
+        private int pageActiveTitleColor;
+        private int pageInActiveTitleColor;
 
         public SavedState(Parcelable superState) {
             super(superState);
@@ -592,6 +622,12 @@ public class PageStepIndicator extends View {
             currentColor = in.readInt();
             textColor = in.readInt();
             secondaryTextColor = in.readInt();
+            titleTextSize = in.readInt();
+            //isTitleClickable = in.readBoo
+            pageActiveTitleColor = in.readInt();
+            pageInActiveTitleColor = in.readInt();
+            pageStrokeAlpha = in.readInt();
+            pageTitleId = in.readInt();
         }
 
         @Override
@@ -607,6 +643,11 @@ public class PageStepIndicator extends View {
             dest.writeInt(currentColor);
             dest.writeInt(textColor);
             dest.writeInt(secondaryTextColor);
+            dest.writeInt(titleTextSize);
+            dest.writeInt(pageActiveTitleColor);
+            dest.writeInt(pageInActiveTitleColor);
+            dest.writeInt(pageStrokeAlpha);
+            dest.writeInt(pageTitleId);
         }
 
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
