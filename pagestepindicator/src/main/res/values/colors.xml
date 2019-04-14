@@ -16,7 +16,7 @@
     <color name="text_default">#000000</color>
     <color name="secondary_text_default">#ffffff</color>
     <color name="status_bar">#838282</color>
-    <color name="lighter_gray">#ddd</color>
+    <color name="lighter_gray">#ababab</color>
     <color name="page_title_color">#797979</color>
 
     <color name="ed_border">#d4606060</color>

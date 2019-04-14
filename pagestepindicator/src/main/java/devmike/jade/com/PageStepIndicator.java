@@ -8,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.*;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ArrayRes;
@@ -17,11 +18,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.ViewUtils;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.LinearLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import com.devmike.pagestepindicator.R;
 
 import java.util.ArrayList;
@@ -35,6 +42,7 @@ public class PageStepIndicator extends View {
     private static final int DEFAULT_BACKGROUND_COLOR = R.color.background_default;
     private static final int DEFAULT_STEP_COLOR = R.color.step_default;
     private static final int DEFAULT_CURRENT_STEP_COLOR = R.color.current_step_default;
+    private static final int DEFAULT_INACTIVE_TITLE= R.color.lighter_gray;
     private static final int DEFAULT_TEXT_COLOR = R.color.text_default;
     private static final int DEFAULT_SECONDARY_TEXT_COLOR = R.color.secondary_text_default;
     public static final float DEFAULT_LINE_HEIGHT =6.0f;
@@ -154,7 +162,8 @@ public class PageStepIndicator extends View {
         Color.colorToHSV(currentColor, hsvCurrent);
         Color.colorToHSV(backgroundColor, hsvBG);
         Color.colorToHSV(stepColor, hsvProgress);
-        animateView(paint, currentColor, currentColor);
+        //animateView(tText, currentColor, currentColor);
+        initAnimation();
         invalidate();
     }
 
@@ -176,8 +185,8 @@ public class PageStepIndicator extends View {
             backgroundColor = attr.getColor(R.styleable.PageStepIndicator_pgBackgroundColor, ContextCompat.getColor(context, DEFAULT_BACKGROUND_COLOR));
             textColor = attr.getColor(R.styleable.PageStepIndicator_pgTextColor, ContextCompat.getColor(context, DEFAULT_TEXT_COLOR));
             secondaryTextColor = attr.getColor(R.styleable.PageStepIndicator_pgSecondaryTextColor, ContextCompat.getColor(context, DEFAULT_SECONDARY_TEXT_COLOR));
-            pageInActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgInActiveTitleColor, ContextCompat.getColor(context, DEFAULT_SECONDARY_TEXT_COLOR));
-            pageActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgActiveTitleColor,  ContextCompat.getColor(context, DEFAULT_CURRENT_STEP_COLOR));
+            pageInActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgInActiveTitleColor, ContextCompat.getColor(context, DEFAULT_INACTIVE_TITLE));
+            pageActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgActiveTitleColor,  ContextCompat.getColor(context, DEFAULT_TEXT_COLOR));
             pageTitleId = attr.getResourceId(R.styleable.PageStepIndicator_pgTitles, View.NO_ID);
             pageStrokeAlpha = attr.getInt(R.styleable.PageStepIndicator_pgStrokeAlpha, DEFAULT_STROKE_ALPHA);
 
@@ -361,7 +370,7 @@ public class PageStepIndicator extends View {
                 pText.setColor(secondaryTextColor);
 
                 tText.setColor(pageInActiveTitleColor);
-                animateView(tText, pageActiveTitleColor, pageInActiveTitleColor);
+                animateView(tText, pageActiveTitleColor, pageInActiveTitleColor, canvas);
 
             } else if (i == currentStepPosition) {
                 //draw current step
@@ -385,7 +394,7 @@ public class PageStepIndicator extends View {
                 pText.setColor(textColor);
 
                 tText.setColor(pageActiveTitleColor);
-                animateView(tText, pageInActiveTitleColor, pageActiveTitleColor);
+                animateView(tText, pageInActiveTitleColor, pageActiveTitleColor, canvas);
 
             } else {
                 //draw next step
@@ -394,7 +403,7 @@ public class PageStepIndicator extends View {
                 pText.setColor(secondaryTextColor);
 
                 tText.setColor(pageInActiveTitleColor);
-                animateView(tText, pageActiveTitleColor, pageInActiveTitleColor);
+                animateView(tText, pageActiveTitleColor, pageInActiveTitleColor, canvas);
 
                 //draw transition
                 if (i == currentStepPosition + 1 && offsetPixel > 0 && pagerScrollState == 1) {
@@ -419,8 +428,30 @@ public class PageStepIndicator extends View {
 
     }
 
-    private void animateView(Paint target, @ColorInt int defaultColor, @ColorInt int toColor){
+    private void initAnimation() {
+        AlphaAnimation animation = new AlphaAnimation(0, 1);
+        animation.setDuration(7500L);
+        animation.setInterpolator(new LinearInterpolator());
+        //startAnimation(animation);
+    }
+
+    private void animateView(Paint target, @ColorInt int defaultColor, @ColorInt int toColor, Canvas canvas){
+        //new ArgbEvaluator(),
         //TODO: Do animation works here
+        ObjectAnimator animator = ObjectAnimator.ofObject(target,
+                "color", new ArgbEvaluator(),   toColor, defaultColor);
+        animator.setDuration(2000);
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float animFrac =animation.getAnimatedFraction();
+                tText.setColor(Color.BLACK);
+                invalidate();
+               // canvas.translate(0, 50);
+            }
+        });
+        animator.start();
 
     }
 
@@ -431,6 +462,8 @@ public class PageStepIndicator extends View {
 
     private void drawTextBottom(Canvas canvas, Paint paint, String text, float cx, float cy) {
         paint.getTextBounds(text, 0, text.length(), textBounds);
+        Path path = new Path();
+
         canvas.drawText(text, cx, cy - textBounds.exactCenterY(), paint);
     }
 
