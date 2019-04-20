@@ -146,6 +146,9 @@ public class PageStepIndicator extends View {
         pStoke.setStyle(Paint.Style.STROKE);
         pStoke.setFlags(Paint.ANTI_ALIAS_FLAG);
 
+        /**
+         * @titleTextSize must not be greater than 19
+         */
 
         tText.setTextSize(titleTextSize);
         tText.setColor(pageInActiveTitleColor);

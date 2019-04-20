@@ -11,7 +11,12 @@
 
     <devmike.jade.com.PageStepIndicator
             app:pgTitles="@array/titles"
+            app:pgTitleTextSize="15sp"
             app:pgStrokeAlpha="255"
+            app:pgRadius="15dp"
+            app:pgCurrentStepColor="@android:color/holo_red_dark"
+            app:pgTextColor="@android:color/white"
+            app:pgStepColor="@android:color/holo_purple"
             android:id="@+id/page_stepper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
