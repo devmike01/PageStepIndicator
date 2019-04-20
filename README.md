@@ -4,6 +4,8 @@ This library was made from existing [StepIndicator](https://github.com/layerlre/
 <img src="https://raw.githubusercontent.com/devmike01/PageStepIndicator/master/preview_01.gif" width="240" height="400" />
 ### How To Use 
 
+[![](https://jitpack.io/v/devmike01/PageStepIndicator.svg)](https://jitpack.io/#devmike01/PageStepIndicator)
+
 - Add `PageStepIndicator` to your app.
 
  Add it in your root build.gradle at the end of repositories:
