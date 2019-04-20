@@ -11,7 +11,6 @@
         tools:context=".MainActivity">
 
     <devmike.jade.com.PageStepIndicator
-            android:visibility="gone"
             app:pgTitles="@array/titles"
             app:pgTitleTextSize="15sp"
             app:pgStrokeAlpha="255"
