@@ -1,4 +1,4 @@
-This app was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library with lots of improvement. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of the one I found and made it into a library.
+This library was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library but with lots of improvement. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of StepIndicator and made it into a library.
 
 ### Preview
 <img src="https://raw.githubusercontent.com/devmike01/PageStepIndicator/master/preview_01.gif" width="240" height="400" />
