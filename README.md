@@ -1,10 +1,10 @@
-This app was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library. I wanted to use a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of the one I found made it into a library.
+This app was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of the one I found and made it into a library.
 
 ### How To Use 
 
 - Add `PageStepIndicator` to your app.
 
-##### Add it in your root build.gradle at the end of repositories:
+ Add it in your root build.gradle at the end of repositories:
 
 ```groovy
 allprojects {
@@ -15,7 +15,7 @@ allprojects {
 	}
 ```
 
-##### Add the dependency
+ Add the dependency
 
 ```groovy
 dependencies {
@@ -39,9 +39,9 @@ dependencies {
             android:layout_height="wrap_content"/>
 ```
 
-- Setup a pager adapter
+- Setup a pager adapter by extending `FragmentStatePagerAdapter` or `FragmentPagerAdapter`.
 
-- Add the adapter to the PageStepIndicator.
+- Add the adapter to your viewpager and pass it to `PageStepIndicator` by calling a handy method `setupWithViewPager(ViewPager)`.
 
 That's all. You can customize it the way you want.
 

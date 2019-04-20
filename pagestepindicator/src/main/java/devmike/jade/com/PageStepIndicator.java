@@ -202,27 +202,6 @@ public class PageStepIndicator extends View {
         this.onTabSelectedListener =onTabSelectedListener;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private void setUpTabLayout(Context context){
-        /*TabLayout tabLayout = new TabLayout(context);
-        for (String title: pageTitles){
-            TabLayout.Tab tab = new TabLayout.Tab();
-            tab.setText(title);
-            tabLayout.addTab(tab);
-            tabLayout.setSelectedTabIndicatorColor(pageActiveTitleColor);
-            tabLayout.setTabTextColors(ColorStateList.valueOf(pageInActiveTitleColor));
-            if(isTitleClickable && onTabSelectedListener != null){
-                tabLayout.addOnTabSelectedListener(onTabSelectedListener);
-            }else {
-                //Disable tabs click
-                LinearLayout tabStrip = (LinearLayout)tabLayout.getChildAt(0);
-                for (int i=0; i < tabStrip.getChildCount(); i ++){
-                    tabStrip.getChildAt(i).setOnTouchListener((v, event) -> true);
-                }
-
-            }*/
-    }
-
 
     @SuppressLint("NewApi")
     protected float dp2px(float dp) {
