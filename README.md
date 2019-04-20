@@ -1,10 +1,11 @@
 This library was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library but with lots of improvement. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of StepIndicator and made it into a library.
 
+[![](https://jitpack.io/v/devmike01/PageStepIndicator.svg)](https://jitpack.io/#devmike01/PageStepIndicator)
+
 ### Preview
 <img src="https://raw.githubusercontent.com/devmike01/PageStepIndicator/master/preview_01.gif" width="240" height="400" />
-### How To Use 
 
-[![](https://jitpack.io/v/devmike01/PageStepIndicator.svg)](https://jitpack.io/#devmike01/PageStepIndicator)
+### How To Use 
 
 - Add `PageStepIndicator` to your app.
 
