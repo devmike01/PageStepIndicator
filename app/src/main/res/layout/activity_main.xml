@@ -13,6 +13,7 @@
             app:pgTitles="@array/titles"
             app:pgTitleTextSize="15sp"
             app:pgStrokeAlpha="255"
+            app:pgLineHeight="10dp"
             app:pgRadius="15dp"
             app:pgCurrentStepColor="@android:color/holo_red_dark"
             app:pgTextColor="@android:color/white"

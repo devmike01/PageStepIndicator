@@ -58,10 +58,10 @@ That's all. You can customize it the way you want.
 - `pgStepCount` Size of step (With out ViewPager)
 - `pgTitles` Titles of pages
 - `pgActiveTitleColor` Current color of page's title
-- `pgInActiveTitleColor` Color of your previous or feature page's title
+- `pgInActiveTitleColor` Color of your previous or future page's title
 - `pgTitleTextSize` Size of your page's title
 - `pgLineHeight` Height of indicator line
-- `pgStrokeAlpha` Opacity of current stroke(255 means the color is fully visible)
+- `pgStrokeAlpha` Opacity of current stroke(255 means the color is solid)
 
 
 
