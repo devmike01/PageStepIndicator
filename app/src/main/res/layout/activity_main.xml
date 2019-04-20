@@ -6,14 +6,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:padding="15dp"
+        android:id="@+id/parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
     <devmike.jade.com.PageStepIndicator
+            android:visibility="gone"
             app:pgTitles="@array/titles"
             app:pgTitleTextSize="15sp"
             app:pgStrokeAlpha="255"
-            app:pgLineHeight="10dp"
+            app:pgLineHeight="2dp"
             app:pgRadius="15dp"
             app:pgCurrentStepColor="@android:color/holo_red_dark"
             app:pgTextColor="@android:color/white"

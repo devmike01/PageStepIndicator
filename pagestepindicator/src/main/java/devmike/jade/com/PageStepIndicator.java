@@ -198,7 +198,7 @@ public class PageStepIndicator extends View {
         }
     }
 
-    public void addOnTabSelectedListener(TabLayout.OnTabSelectedListener onTabSelectedListener){
+    private void addOnTabSelectedListener(TabLayout.OnTabSelectedListener onTabSelectedListener){
         this.onTabSelectedListener =onTabSelectedListener;
     }
 
