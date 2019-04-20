@@ -1,5 +1,7 @@
 This app was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of the one I found and made it into a library.
 
+### Preview
+<img src="https://raw.githubusercontent.com/devmike01/PageStepIndicator/master/preview_01.gif" width="240" height="300" />
 ### How To Use 
 
 - Add `PageStepIndicator` to your app.
