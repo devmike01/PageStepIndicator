@@ -2,7 +2,9 @@ apply plugin: 'com.android.library'
 
 apply from: rootProject.file('dependecy.gradle')
 
-group='com.github.devmike01'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.devmike01.pagestepindicator'
 
 
 android {

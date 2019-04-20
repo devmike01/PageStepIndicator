@@ -24,7 +24,7 @@ allprojects {
 
 ```groovy
 dependencies {
-	        implementation 'com.github.devmike01:PageStepIndicator:1.0.0'
+	        implementation 'com.github.devmike01:PageStepIndicator:1.1.0'
 	}
 ```
 
