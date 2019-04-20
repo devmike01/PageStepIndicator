@@ -1,4 +1,4 @@
-This app was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of the one I found and made it into a library.
+This app was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library with lots of improvement. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of the one I found and made it into a library.
 
 ### Preview
 <img src="https://raw.githubusercontent.com/devmike01/PageStepIndicator/master/preview_01.gif" width="240" height="400" />
@@ -46,6 +46,24 @@ dependencies {
 - Add the adapter to your viewpager and pass it to `PageStepIndicator` by calling a handy method `setupWithViewPager(ViewPager)`.
 
 That's all. You can customize it the way you want.
+
+### Customization
+- `pgStepColor` Color of the step indicator
+- `pgCurrentStepColor` Color of the current step
+- `pgBackgroundColor` Background color of the step indicator
+- `pgTextColor` Background color of the step indicator
+- `pgSecondaryTextColor` Background color of the step indicator
+- `pgRadius` Radius of the step indicator
+- `pgStrokeWidth` Stroke Width of a current step
+- `pgStepCount` Size of step (With out ViewPager)
+- `pgTitles` Titles of pages
+- `pgActiveTitleColor` Current color of page's title
+- `pgInActiveTitleColor` Color of your previous or feature page's title
+- `pgTitleTextSize` Size of your page's title
+- `pgLineHeight` Height of indicator line
+- `pgStrokeAlpha` Opacity of current stroke(255 means the color is fully visible)
+
+
 
 License
 -------
