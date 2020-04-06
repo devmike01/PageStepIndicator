@@ -44,9 +44,11 @@ dependencies {
             android:layout_height="wrap_content"/>
 ```
 
-- Setup a pager adapter by extending `FragmentStatePagerAdapter` or `FragmentPagerAdapter`.
+- Create a pager adapter by extending `FragmentStatePagerAdapter` or `FragmentPagerAdapter`.
 
-- Add the adapter to your viewpager and pass it to `PageStepIndicator` by calling a handy method `setupWithViewPager(ViewPager)`.
+- Setup the adapter with your viewpager.
+ 
+- Call `setupWithViewPager(ViewPager)` from `PageStepIndicator` and pass the instance of your viewpager as an argument to it.
 
 That's all. You can customize it the way you want.
 
