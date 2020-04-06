@@ -1,4 +1,4 @@
-This library was made from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library but with lots of improvement. I needed a page indicator that could display title and at the same time have a transparent border, but I couldn't find one. So I modified the source code of StepIndicator and made it into a library.
+PageStepIndicator was built from existing [StepIndicator](https://github.com/layerlre/StepIndicator) library developed by [Layerlre](https://github.com/layerlre) . I needed a page indicator that can display title and at the same time have a transparent border, but I couldn't find one. So I modified the existing StepIndicator's source code and shamelessly publish it as a new library. 
 
 [![](https://jitpack.io/v/devmike01/PageStepIndicator.svg)](https://jitpack.io/#devmike01/PageStepIndicator)
 
@@ -54,12 +54,12 @@ That's all. You can customize it the way you want.
 - `pgStepColor` Color of the step indicator
 - `pgCurrentStepColor` Color of the current step
 - `pgBackgroundColor` Background color of the step indicator
-- `pgTextColor` Background color of the step indicator
-- `pgSecondaryTextColor` Background color of the step indicator
+- `pgTextColor` Active step position color
+- `pgSecondaryTextColor` Inactive step position color
 - `pgRadius` Radius of the step indicator
 - `pgStrokeWidth` Stroke Width of a current step
 - `pgStepCount` Size of step (With out ViewPager)
-- `pgTitles` Titles of pages
+- `pgTitles` Title of pages
 - `pgActiveTitleColor` Current color of page's title
 - `pgInActiveTitleColor` Color of your previous or future page's title
 - `pgTitleTextSize` Size of your page's title
