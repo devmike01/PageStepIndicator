@@ -9,7 +9,7 @@ PageStepIndicator was built from existing [StepIndicator](https://github.com/lay
 
 - Add `PageStepIndicator` to your app.
 
- Add it in your root build.gradle at the end of repositories:
+ Add it to your root build.gradle at the end of repositories:
 
 ```groovy
 allprojects {
