@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = MyPagerAdapter(supportFragmentManager)
         vp.adapter = adapter
+        pageStepper.setEnableStepClick(false)
 
         pageStepper.setupWithViewPager(vp)
     }

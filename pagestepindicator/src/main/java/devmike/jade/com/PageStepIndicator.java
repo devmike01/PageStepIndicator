@@ -4,11 +4,9 @@ import android.animation.*;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.*;
 import android.os.Build;
-import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ArrayRes;
@@ -18,20 +16,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.ViewUtils;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-import android.widget.LinearLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
-import com.devmike.pagestepindicator.R;
 
-import java.util.ArrayList;
+import com.devmike.pagestepindicator.R;
 
 
 public class PageStepIndicator extends View {
@@ -48,6 +41,7 @@ public class PageStepIndicator extends View {
     public static final float DEFAULT_LINE_HEIGHT =6.0f;
     public static final int DEFAULT_STROKE_ALPHA = 100;
     private static final int DEFAULT_TITLE_SIZE =14;
+    private static final boolean DEFAULT_STEP_CLICK =true;
 
     private String[] titles;
 
@@ -88,6 +82,8 @@ public class PageStepIndicator extends View {
     private float[] hsvBG = new float[3];
     private float[] hsvProgress = new float[3];
 
+    private boolean pgEnableStepClick = true;
+
     private boolean clickable = true;
     private boolean withViewpager;
     private ViewPagerOnChangeListener viewPagerChangeListener;
@@ -120,7 +116,7 @@ public class PageStepIndicator extends View {
         void onClick(int position);
     }
 
-    public void setOnClickListener(OnClickListener onClickListener) {
+    private void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
@@ -192,6 +188,7 @@ public class PageStepIndicator extends View {
             pageActiveTitleColor = attr.getColor(R.styleable.PageStepIndicator_pgActiveTitleColor,  ContextCompat.getColor(context, DEFAULT_TEXT_COLOR));
             pageTitleId = attr.getResourceId(R.styleable.PageStepIndicator_pgTitles, View.NO_ID);
             pageStrokeAlpha = attr.getInt(R.styleable.PageStepIndicator_pgStrokeAlpha, DEFAULT_STROKE_ALPHA);
+            pgEnableStepClick = attr.getBoolean(R.styleable.PageStepIndicator_pgEnableStepClick, DEFAULT_STEP_CLICK);
 
         } finally {
             attr.recycle();
@@ -244,6 +241,10 @@ public class PageStepIndicator extends View {
 
     public void setRadius(int radius) {
         this.radius = radius;
+    }
+
+    public void setEnableStepClick(boolean enableStep){
+        this.pgEnableStepClick = enableStep;
     }
 
     public void setupWithViewPager(@NonNull ViewPager viewPager) {
@@ -500,7 +501,7 @@ public class PageStepIndicator extends View {
                             setCurrentStepPosition(i);
                         }
 
-                        if (onClickListener != null) {
+                        if (onClickListener != null && pgEnableStepClick) {
                             onClickListener.onClick(i);
                         }
                     }
@@ -570,6 +571,7 @@ public class PageStepIndicator extends View {
             disablePageChange = true;
             setCurrentStepPosition(position);
             mViewPager.setCurrentItem(position);
+            Log.d("PageStepIndicator", "___"+position);
         }
     }
 

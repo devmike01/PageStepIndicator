@@ -10,7 +10,7 @@
         <attr name="pgTextColor" format="color" />
         <attr name="pgSecondaryTextColor" format="color" />
         <attr name="pgLineHeight" format="dimension" />
-
+        <attr name="pgEnableStepClick" format="boolean"/>
         <attr name="pgStrokeAlpha" format="integer"/>
         <attr name="pgTitles" format="reference"/>
         <attr name="pgClickableTitle" format="boolean"/>
