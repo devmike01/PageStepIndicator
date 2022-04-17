@@ -11,9 +11,7 @@ class FakePageStepIndicatorViewPager : PageStepIndicatorViewPager<MockViewPager>
 
     private var stepCount =0
 
-    override fun setupWithViewPager(viewPager: MockViewPager) {
-        
-    }
+    override fun setupWithViewPager(viewPager: MockViewPager) {}
 
     override fun getPageStepIndicator(): PageStepIndicator {
         return FakePageStepIndicator()

@@ -1,4 +1,5 @@
 import fakes.FakePageStepIndicator
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -8,7 +9,7 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class PageIndicatorTest {
 
-    lateinit var pageStepIndicator : FakePageStepIndicator
+    var pageStepIndicator : FakePageStepIndicator? = null
 
     @Before
     fun `init`(){
@@ -16,8 +17,23 @@ class PageIndicatorTest {
     }
 
     @Test
-    fun `check setOffset `(){
+    fun `check value passed into setCurrentPosition is correct `(){
+        pageStepIndicator?.setCurrentPosition(4)
+        assertEquals(pageStepIndicator?.getCurrentStepPosition(), 4)
+    }
 
+    @Test
+    fun `Check setPagerScrollState`(){
+        pageStepIndicator?.setPagerScrollState(43)
+        assertEquals(pageStepIndicator?.state, 43)
+
+    }
+
+
+
+    @After
+    fun `tear down`(){
+        pageStepIndicator = null;
     }
 
 }

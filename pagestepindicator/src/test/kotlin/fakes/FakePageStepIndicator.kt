@@ -6,15 +6,18 @@ class FakePageStepIndicator : PageStepIndicator {
 
     private var currentStepPosition = 0
 
-    override fun setOffset(position: Int, positionOffset: Float) {
-        this.currentStepPosition = position
-    }
+    var state = 0
 
     override fun setPagerScrollState(state: Int) {
-        currentStepPosition = state
+        this.state = state
     }
 
     override fun setCurrentPosition(position: Int) {
         this.currentStepPosition = position
     }
+
+    fun getCurrentStepPosition(): Int{
+        return currentStepPosition
+    }
+
 }

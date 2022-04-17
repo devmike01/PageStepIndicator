@@ -104,8 +104,6 @@ public class PageStepIndicatorImpl extends AbstractViewPagerImpl implements Page
         return disablePageChange;
     }
 
-
-    @Override
     public void setOffset(int position, float positionOffset) {
         this.offset = positionOffset;
         offsetPixel = Math.round(stepDistance * offset);
