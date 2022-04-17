@@ -31,7 +31,7 @@ dependencies {
 - Add `PageStepIndicator` to your layout. E.g:
 
 ```xml
-    <devmike.jade.com.PageStepIndicator
+    <devmike.jade.com.PageStepIndicatorImpl
             app:pgTitles="@array/titles"
             app:pgTitleTextSize="15sp"
             app:pgStrokeAlpha="255"

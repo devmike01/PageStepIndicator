@@ -1,19 +1,19 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 apply from: rootProject.file('dependecy.gradle')
-
-apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.github.devmike01.pagestepindicator'
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 32
+
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 32
         versionCode 1
-        versionName "1.0"
+        versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -22,10 +22,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '28.0.3'
+    //buildToolsVersion '30.0.2'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    testFixtures {
+        enable = true
     }
 }
 
@@ -35,6 +38,8 @@ dependencies {
     implementation dependency.appCompat
     implementation dependency.junit
     implementation dependency.supportDesign
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     /*Properties props = new Properties()
     //InputStream inputStream = this.getClass().getResourceAsStream("local.properties")
@@ -45,6 +50,9 @@ dependencies {
 
     } else {
     }*/
+}
+repositories {
+    mavenCentral()
 }
 
 //sourceCompatibility = "8"
