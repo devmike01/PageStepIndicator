@@ -11,7 +11,7 @@ import devmike.jade.com.listeners.OnClickStepListener
 
 abstract class AbstractViewPagerImpl : View, PageStepIndicatorViewPager<ViewPager> {
 
-    var mStepsCount =0;
+    private var mStepsCount =1;
 
     var disablePageChange : Boolean = false
 
@@ -27,11 +27,7 @@ abstract class AbstractViewPagerImpl : View, PageStepIndicatorViewPager<ViewPage
 
 
     private val pageChangedListener = object : ViewPager.OnPageChangeListener{
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            if (!disablePageChange) {
-                getPageStepIndicator().setOffset(position, positionOffset)
-            }
-        }
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
         override fun onPageSelected(position: Int) {
             if (!disablePageChange) {
@@ -58,14 +54,19 @@ abstract class AbstractViewPagerImpl : View, PageStepIndicatorViewPager<ViewPage
          viewPager.addOnPageChangeListener(pageChangedListener)
 
          // Now we'll add a selected listener to set ViewPager's currentStepPosition item
-         setOnClickListener(object : PageStepIndicatorImpl.OnClickListener{
-             override fun onClick(position: Int) {
-                 //disablePageChange = true;
+         setOnClickListener(PageStepIndicatorImpl.OnClickListener { position -> //disablePageChange = true;
+             setCurrentStepPosition(position);
+             viewPager.currentItem = position;
+             invalidate()
+         });
+
+         setOnClickStepListener(object : OnClickStepListener{
+             override fun onClickStep(position: Int) {
                  setCurrentStepPosition(position);
                  viewPager.currentItem = position;
              }
 
-         });
+         })
 
          // Now we'll add a selected listener to set ViewPager's currentStepPosition item
         // setOnClickListener( ViewPagerOnSelectedListener(viewPager));
@@ -95,7 +96,7 @@ abstract class AbstractViewPagerImpl : View, PageStepIndicatorViewPager<ViewPage
 
     override fun getCount(): Int = mStepsCount
 
-    fun setCompatClickStepListener(position: Int){
+    protected fun setCompatClickStepListener(position: Int){
         this.onClickListener?.onClick(position)
         this.onClickStepListener?.onClickStep(position)
     }

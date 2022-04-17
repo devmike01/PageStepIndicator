@@ -1,0 +1,4 @@
+package fakes
+
+class MockViewPager {
+}

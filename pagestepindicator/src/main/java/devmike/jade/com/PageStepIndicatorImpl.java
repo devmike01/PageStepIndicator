@@ -86,7 +86,7 @@ public class PageStepIndicatorImpl extends AbstractViewPagerImpl implements Page
     private boolean withViewpager;
     //private ViewPagerOnChangeListenerImpl viewPagerChangeListener;
     private boolean disablePageChange;
-    private TabLayout.OnTabSelectedListener onTabSelectedListener;
+   // private TabLayout.OnTabSelectedListener onTabSelectedListener;
     private OnClickStepListener onClickStepListener;
 
     public PageStepIndicatorImpl(@NonNull Context context, @NonNull AttributeSet attrs, int defStyleAttr) {
@@ -209,11 +209,6 @@ public class PageStepIndicatorImpl extends AbstractViewPagerImpl implements Page
             attr.recycle();
         }
     }
-
-    private void addOnTabSelectedListener(TabLayout.OnTabSelectedListener onTabSelectedListener){
-        this.onTabSelectedListener =onTabSelectedListener;
-    }
-
 
     @SuppressLint("NewApi")
     protected float dp2px(float dp) {

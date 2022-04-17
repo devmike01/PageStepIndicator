@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import devmike.jade.com.PageStepIndicatorImpl
+import devmike.jade.com.listeners.OnClickStepListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,9 +27,9 @@ class MainActivity : AppCompatActivity() {
          this.adapter = adapter
         }
 
-        pageStepperImpl.setOnClickListener(object : PageStepIndicatorImpl.OnClickListener{
-            override fun onClick(position: Int) {
-                Log.d("setOnClick", "$position")
+        pageStepperImpl.setOnClickStepListener(object : OnClickStepListener{
+            override fun onClickStep(position: Int) {
+                Log.d("onClickStep", "onClickStep => $position")
             }
 
         })
