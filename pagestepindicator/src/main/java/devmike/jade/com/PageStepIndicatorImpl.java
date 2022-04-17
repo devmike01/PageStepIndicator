@@ -4,37 +4,32 @@ import android.animation.*;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.*;
 import android.os.Build;
-import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.ViewUtils;
+import androidx.annotation.ArrayRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-import android.widget.LinearLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
+
 import com.devmike.pagestepindicator.R;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
+import devmike.jade.com.listeners.OnClickStepListener;
 
 
-public class PageStepIndicator extends View {
+public class PageStepIndicatorImpl extends AbstractViewPagerImpl implements PageStepIndicator {
 
     private static final int DEFAULT_STEP_RADIUS = 14;   //DP
     private static final int DEFAULT_STOKE_WIDTH = 6;  //DP
@@ -83,36 +78,54 @@ public class PageStepIndicator extends View {
     private Paint tText;
     private int titleSize;
     private final Rect textBounds = new Rect();
-    private OnClickListener onClickListener;
     private float[] hsvCurrent = new float[3];
     private float[] hsvBG = new float[3];
     private float[] hsvProgress = new float[3];
 
     private boolean clickable = true;
     private boolean withViewpager;
-    private ViewPagerOnChangeListener viewPagerChangeListener;
+    //private ViewPagerOnChangeListenerImpl viewPagerChangeListener;
     private boolean disablePageChange;
-    private TabLayout.OnTabSelectedListener onTabSelectedListener;
+   // private TabLayout.OnTabSelectedListener onTabSelectedListener;
+    private OnClickStepListener onClickStepListener;
 
-    public PageStepIndicator(Context context) {
-        super(context);
-        init(context, null);
-    }
-
-    public PageStepIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public PageStepIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PageStepIndicatorImpl(@NonNull Context context, @NonNull AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public PageStepIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    public PageStepIndicatorImpl(@NonNull Context context, @NonNull AttributeSet attrs) {
+        super(context, attrs);
         init(context, attrs);
+    }
+
+    @Override
+    public boolean disablePageChange() {
+        return disablePageChange;
+    }
+
+    public void setOffset(int position, float positionOffset) {
+        this.offset = positionOffset;
+        offsetPixel = Math.round(stepDistance * offset);
+        if (currentStepPosition > position) {
+            offsetPixel = offsetPixel - stepDistance;
+        } else {
+            currentStepPosition = position;
+        }
+
+        invalidate();
+    }
+
+    @Override
+    public void setCurrentPosition(int position) {
+        this.currentStepPosition = position;
+        invalidate();
+    }
+
+    @NonNull
+    @Override
+    public PageStepIndicator getPageStepIndicator() {
+        return this;
     }
 
 
@@ -120,9 +133,6 @@ public class PageStepIndicator extends View {
         void onClick(int position);
     }
 
-    public void setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
 
     private void init(Context context, AttributeSet attributeSet) {
 
@@ -198,11 +208,6 @@ public class PageStepIndicator extends View {
         }
     }
 
-    private void addOnTabSelectedListener(TabLayout.OnTabSelectedListener onTabSelectedListener){
-        this.onTabSelectedListener =onTabSelectedListener;
-    }
-
-
     @SuppressLint("NewApi")
     protected float dp2px(float dp) {
         DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
@@ -244,45 +249,6 @@ public class PageStepIndicator extends View {
 
     public void setRadius(int radius) {
         this.radius = radius;
-    }
-
-    public void setupWithViewPager(@NonNull ViewPager viewPager) {
-        final PagerAdapter adapter = viewPager.getAdapter();
-        if (adapter == null) {
-            throw new IllegalArgumentException("ViewPager does not have a PagerAdapter set");
-        }
-        if (viewPagerChangeListener == null) {
-            viewPagerChangeListener = new ViewPagerOnChangeListener(this);
-        }
-        withViewpager = true;
-        // First we'll add Steps.
-        setStepsCount(adapter.getCount());
-
-        // Now we'll add our page change listener to the ViewPager
-        viewPager.addOnPageChangeListener(viewPagerChangeListener);
-
-        // Now we'll add a selected listener to set ViewPager's currentStepPosition item
-        setOnClickListener(new ViewPagerOnSelectedListener(viewPager));
-
-        viewPager.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getActionMasked() == MotionEvent.ACTION_MOVE) {
-                    ((ViewPager) v).addOnPageChangeListener(viewPagerChangeListener);
-                    disablePageChange = false;
-                }
-                return false;
-            }
-        });
-
-        // Make sure we reflect the currently set ViewPager item
-        if (adapter.getCount() > 0) {
-            final int curItem = viewPager.getCurrentItem();
-            if (getCurrentStepPosition() != curItem) {
-                setCurrentStepPosition(curItem);
-                invalidate();
-            }
-        }
     }
 
 
@@ -467,19 +433,8 @@ public class PageStepIndicator extends View {
         return Color.HSVToColor(hsv);
     }
 
-    private void setOffset(float offset, int position) {
-        this.offset = offset;
-        offsetPixel = Math.round(stepDistance * offset);
-        if (currentStepPosition > position) {
-            offsetPixel = offsetPixel - stepDistance;
-        } else {
-            currentStepPosition = position;
-        }
-
-        invalidate();
-    }
-
-    private void setPagerScrollState(int pagerScrollState) {
+    @Override
+    public void setPagerScrollState(int pagerScrollState) {
         this.pagerScrollState = pagerScrollState;
     }
 
@@ -500,9 +455,7 @@ public class PageStepIndicator extends View {
                             setCurrentStepPosition(i);
                         }
 
-                        if (onClickListener != null) {
-                            onClickListener.onClick(i);
-                        }
+                        setCompatClickStepListener(i);
                     }
                     pointX = pointX + stepDistance;
                 }
@@ -530,48 +483,6 @@ public class PageStepIndicator extends View {
         invalidate();
     }
 
-    public class ViewPagerOnChangeListener implements ViewPager.OnPageChangeListener {
-        private final PageStepIndicator stepIndicator;
-
-        public ViewPagerOnChangeListener(PageStepIndicator stepIndicator) {
-            this.stepIndicator = stepIndicator;
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            if (!disablePageChange) {
-                stepIndicator.setOffset(positionOffset, position);
-            }
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            if (!disablePageChange) {
-                stepIndicator.setCurrentStepPosition(position);
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-            stepIndicator.setPagerScrollState(state);
-        }
-
-    }
-
-    public class ViewPagerOnSelectedListener implements OnClickListener {
-        private final ViewPager mViewPager;
-
-        public ViewPagerOnSelectedListener(ViewPager viewPager) {
-            mViewPager = viewPager;
-        }
-
-        @Override
-        public void onClick(int position) {
-            disablePageChange = true;
-            setCurrentStepPosition(position);
-            mViewPager.setCurrentItem(position);
-        }
-    }
 
 
     @Override

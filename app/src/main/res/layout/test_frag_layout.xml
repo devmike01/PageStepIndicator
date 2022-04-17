@@ -9,7 +9,7 @@
               android:layout_gravity="center"
               android:textSize="100sp"
               tools:text="11"
-              android:id="@+id/numberTv"
+              android:id="@+id/number_tv"
               android:layout_marginTop="50dp"
               android:textAlignment="center"
               android:textColor="@color/colorAccent"
